@@ -17,18 +17,26 @@ public class Board
                                         "monkey", "monkey",
                                         "turtle", "turtle"}; 
   private Tile[][] gameboard = new Tile[3][4];
-
   /**  
    * Constructor for the game. Creates the 2D gameboard
    * by populating it with card values
    * 
    */
+
   public Board()
   {
-   
-    /* your code here */ 
-
+ 
+   for(int a = 0; a < gameboard.length; a++){
+    for(int i = 0; i < gameboard[a].length; i++){
+      int random = (int)(Math.random() * tileValues.length);
+      gameboard[a][i] = new Tile(tileValues[random]);
+      System.out.println(gameboard[a][i]);
+    }
+   }
   }
+  //   /* your code here */ 
+
+  // }
 
  /** 
    * Returns a string representation of the board, getting the state of
@@ -41,10 +49,20 @@ public class Board
    */
   public String toString()
   {
- 
-    /* your code here */
- 
-    return "";
+    String haha = "";
+    for(Tile[] x: gameboard){
+      for(Tile i: x){
+        if(i.isShowingValue() ==true){
+          haha += i + "\t";
+        }
+        if(i.isShowingValue() == false){
+          haha += i.getHidden() + "\t";
+        }
+      }
+      haha += "\n";
+    }
+    System.out.println(haha);
+    return haha;
   }
 
   /** 
@@ -57,11 +75,20 @@ public class Board
    */
   public boolean allTilesMatch()
   {
-
+    for(Tile[] x: gameboard){
+      for(Tile i: x){
     /* your code  here */
-    
+        if(!i.isShowingValue()){
+          return false;
+        }
+   
+     }
+    }
     return true;
   }
+  // public String showValue(){
+
+  // }
 
   /** 
    * Sets the tile to show its value (like a playing card face up)
@@ -76,7 +103,7 @@ public class Board
    */
   public void showValue (int row, int column)
   {
-   
+   gameboard[row][column].show();
     /* your code here */
   }  
 
@@ -101,7 +128,14 @@ public class Board
   {
     String msg = "";
 
-     /* your code here */
+     if(gameboard[row1][col1].getValue().equals(gameboard[row2][col2].getValue())){
+      msg = "Horray, you found a pair!";
+     }
+     else{
+      gameboard[row1][col1].hide();
+      gameboard[row2][col2].hide();
+      msg = "uh oh, try again.";
+     }
     
      return msg;
   }
@@ -117,9 +151,12 @@ public class Board
   public boolean validateSelection(int row, int col)
   {
 
-    /* your code here */
+    if (gameboard[row][col].isShowingValue() || row < 0 || row >= gameboard.length || col < 0 || col >= gameboard[0].length) {
+      return false;
+  }
 
-    return true;
+  // Check if the tile is already showing (matched)
+  return true;
   }
 
 }
