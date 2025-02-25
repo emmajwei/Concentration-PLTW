@@ -25,12 +25,18 @@ public class Board
 
   public Board()
   {
- 
+    for (int i = 0; i < tileValues.length; i++) {
+      int random = (int)(Math.random() * tileValues.length);
+      String temp = tileValues[i];
+      tileValues[i] = tileValues[random];
+      tileValues[random] = temp;
+    }
+    int count = 0;
    for(int a = 0; a < gameboard.length; a++){
     for(int i = 0; i < gameboard[a].length; i++){
-      int random = (int)(Math.random() * tileValues.length);
-      gameboard[a][i] = new Tile(tileValues[random]);
+      gameboard[a][i] = new Tile(tileValues[count]);
       System.out.println(gameboard[a][i]);
+      count++;
     }
    }
   }
